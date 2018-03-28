@@ -1,3 +1,14 @@
 .vignette-list {
 	white-space: nowrap;
 }
+
+.vignette-list > img {
+	cursor: pointer;
+}
+
+.vignette-container {
+	height: 300px;
+	border: 2px solid black;
+	margin: 10px;
+	padding: 10px;
+}

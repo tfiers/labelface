@@ -15,23 +15,34 @@
        See: https://vuejs.org
   -->
   <div id="label-app">
-    <div id="unlabeled-events" class="vignette-list">
+    <div id="unlabeled-events" class="vignette-container vignette-list">
       <h3>Unlabeled events</h3>
       <img v-for="event in events"
-           v-if="event.label == null"
-           v-bind:src="imageSrc(event)">
+           v-if="(event.label == null) && (event.id != activeEventId)"
+           v-bind:src="imageSrc(event)"
+           v-on:click="activeEventId = event.id">
     </div>
-    <div id="labeled-not-SWR" class="vignette-list">
+
+    <div id="active-event" class="vignette-container vignette-list">
+      <img v-if="activeEventId != null"
+           v-bind:src="imageSrc(getEvent(activeEventId))">
+      <button v-on:click="onLabel('SWR')">Probably an SWR event</button>
+      <button v-on:click="onLabel('Not SWR')">Probably not an SWR event</button>
+    </div>
+
+    <div id="labeled-not-SWR" class="vignette-container vignette-list">
       <h3>Labelled as 'Not SWR'</h3>
       <img v-for="event in events"
-           v-if="event.label == 'Not SWR'"
-           v-bind:src="imageSrc(event)">
+           v-if="(event.label == 'Not SWR') && (event.id != activeEventId)"
+           v-bind:src="imageSrc(event)"
+           v-on:click="activeEventId = event.id">
     </div>
-    <div id="labeled-SWR" class="vignette-list">
+    <div id="labeled-SWR" class="vignette-container vignette-list">
       <h3>Labelled as 'SWR'</h3>
       <img v-for="event in events"
-           v-if="event.label == 'SWR'"
-           v-bind:src="imageSrc(event)">
+           v-if="(event.label == 'SWR') && (event.id != activeEventId)"
+           v-bind:src="imageSrc(event)"
+           v-on:click="activeEventId = event.id">
     </div>
   </div>
 
