@@ -4,28 +4,29 @@ let labelApp = new Vue({
   el: '#label-app',
   data: {
     activeEventId: null,
-    events: [
-      {
-        id: 266,
-        label: 'SWR',
-        comment: '',
-      },
-      {
-        id: 267,
-        label: null,
-        comment: '',
-      },
-      {
-        id: 268,
-        label: null,
-        comment: '',
-      },
-      {
-        id: 269,
-        label: 'Not SWR',
-        comment: '',
-      },
-    ],
+    // events: [
+    //   {
+    //     id: 266,
+    //     label: 'SWR',
+    //     comment: '',
+    //   },
+    //   {
+    //     id: 267,
+    //     label: null,
+    //     comment: '',
+    //   },
+    //   {
+    //     id: 268,
+    //     label: null,
+    //     comment: '',
+    //   },
+    //   {
+    //     id: 269,
+    //     label: 'Not SWR',
+    //     comment: '',
+    //   },
+    // ],
+    events: Array(1000).fill().map((v,i)=>({id: i, label: null})),
   },
   methods: {
     getEvent: function(id) {
