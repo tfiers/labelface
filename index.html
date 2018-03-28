@@ -15,34 +15,51 @@
        See: https://vuejs.org
   -->
   <div id="label-app">
-    <div id="unlabeled-events" class="vignette-container vignette-list">
-      <h3>Unlabeled events</h3>
-      <img v-for="event in events"
-           v-if="(event.label == null) && (event.id != activeEventId)"
-           v-bind:src="imageSrc(event)"
-           v-on:click="activeEventId = event.id">
+    <div id="unlabelled-events" class="vignette-list">
+
+      <h4>Unlabelled events</h4>
+      <div class="vignette-container">
+        <img v-for="event in events"
+             v-if="(event.label == null) && (event.id != activeEventId)"
+             v-bind:src="imageSrc(event)"
+             v-on:click="activeEventId = event.id">
+      </div>
     </div>
 
-    <div id="active-event" class="vignette-container vignette-list">
-      <img v-if="activeEventId != null"
-           v-bind:src="imageSrc(getEvent(activeEventId))">
-      <button v-on:click="onLabel('SWR')">Probably an SWR event</button>
-      <button v-on:click="onLabel('Not SWR')">Probably not an SWR event</button>
+    <div id="active-event">
+      <div class="vignette-container">
+        <img v-if="activeEventId != null"
+             v-bind:src="imageSrc(getEvent(activeEventId))">
+      </div>
+      <button v-on:click="onLabel('Not SWR')"
+              class="btn btn-outline-primary">
+        (<) Label Not SWR
+      </button>
+      <button v-on:click="onLabel('SWR')"
+              class="btn btn-outline-primary">
+        Label SWR (>)
+      </button>
     </div>
 
-    <div id="labeled-not-SWR" class="vignette-container vignette-list">
-      <h3>Labelled as 'Not SWR'</h3>
-      <img v-for="event in events"
-           v-if="(event.label == 'Not SWR') && (event.id != activeEventId)"
-           v-bind:src="imageSrc(event)"
-           v-on:click="activeEventId = event.id">
+    <div id="labelled-not-SWR" class="vignette-list">
+
+      <h4>Probably not an SWR event</h4>
+      <div class="vignette-container">
+        <img v-for="event in events"
+             v-if="(event.label == 'Not SWR') && (event.id != activeEventId)"
+             v-bind:src="imageSrc(event)"
+             v-on:click="activeEventId = event.id">
+      </div>
     </div>
-    <div id="labeled-SWR" class="vignette-container vignette-list">
-      <h3>Labelled as 'SWR'</h3>
-      <img v-for="event in events"
-           v-if="(event.label == 'SWR') && (event.id != activeEventId)"
-           v-bind:src="imageSrc(event)"
-           v-on:click="activeEventId = event.id">
+    <div id="labelled-SWR" class="vignette-list">
+
+      <h4>Probably an SWR event</h4>
+      <div class="vignette-container">
+        <img v-for="event in events"
+             v-if="(event.label == 'SWR') && (event.id != activeEventId)"
+             v-bind:src="imageSrc(event)"
+             v-on:click="activeEventId = event.id">
+      </div>
     </div>
   </div>
 

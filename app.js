@@ -34,7 +34,7 @@ let labelApp = new Vue({
     imageSrc: (event) => {
       return `D:\\thesis\\data\\Vignettes\\${event.id}.png`
     },
-    loadUnlabeledEvent: function() {
+    loadUnlabelledEvent: function() {
       event = this.events.find((event) => event.label == null)
       if (event == null) {
         this.activeEventId = null
@@ -45,8 +45,10 @@ let labelApp = new Vue({
     },
     onLabel: function(label) {
       event = this.getEvent(this.activeEventId)
-      event.label = label
-      this.loadUnlabeledEvent()
+      if (event != null) {
+        event.label = label
+        this.loadUnlabelledEvent()
+      }
     },
   },
   watch: {
@@ -55,7 +57,17 @@ let labelApp = new Vue({
       // handler: updateMeshes,
     },
   },
-  beforeMount: function() {
-    this.loadUnlabeledEvent();
+  created: function() {
+    this.loadUnlabelledEvent()
+
+    let vm = this
+    window.addEventListener('keyup', function(e) {
+      if (e.which == 37) {
+        vm.onLabel('Not SWR')
+      }
+      else if (e.which == 39) {
+        vm.onLabel('SWR')
+      }
+    })
   },
 });

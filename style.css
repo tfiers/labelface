@@ -1,14 +1,41 @@
-.vignette-list {
-	white-space: nowrap;
+.vignette-list, #active-event {
+	margin: 20px 10px 0 10px;
+	padding: 10px 0 0 10px;
+	width: 47%;
 }
 
-.vignette-list > img {
-	cursor: pointer;
+#unlabelled-events, #active-event {
+	margin-bottom: 50px;
 }
 
 .vignette-container {
-	height: 300px;
+	height: 170px;
+}
+
+h4 {
+	margin: 0;
+}
+
+.vignette-list {
 	border: 2px solid black;
-	margin: 10px;
-	padding: 10px;
+	float: left;
+}
+.vignette-list > .vignette-container {
+	white-space: nowrap;
+	overflow-x: scroll;
+	cursor: pointer;
+}
+
+.vignette-list > .vignette-container > img {
+	cursor: pointer;
+	height: 150px;
+}
+
+#active-event {
+	clear: both;
+	border: 2px solid grey;
+}
+
+#labelled-SWR {
+	float: right;
 }
