@@ -3,7 +3,10 @@
 <head>
   <meta charset="utf-8">
   <title>Label putative SWR events</title>
-  <link rel="stylesheet" type="text/css" href="style.css">
+  <link rel="stylesheet" 
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
 </head>
 <body>
   <!-- Attributes with the prefix "v-" are
@@ -12,9 +15,7 @@
   -->
   <div id="label-app">
     <div id="unlabeled-events">
-      <h1>Unlabeled events:</h1>
-      <img v-for="event in unlabeledEvents"
-           v-bind:src="imageSrc(event)">
+      
     </div>
   </div>
 
