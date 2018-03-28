@@ -7,6 +7,7 @@
         href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
         crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
   <!-- Attributes with the prefix "v-" are
@@ -14,9 +15,22 @@
        See: https://vuejs.org
   -->
   <div id="label-app">
-    <div id="unlabeled-events">
-      <h1>Unlabeled events:</h1>
-      <img v-for="event in unlabeledEvents"
+    <div id="unlabeled-events" class="vignette-list">
+      <h3>Unlabeled events</h3>
+      <img v-for="event in events"
+           v-if="event.label == null"
+           v-bind:src="imageSrc(event)">
+    </div>
+    <div id="labeled-not-SWR" class="vignette-list">
+      <h3>Labelled as 'Not SWR'</h3>
+      <img v-for="event in events"
+           v-if="event.label == 'Not SWR'"
+           v-bind:src="imageSrc(event)">
+    </div>
+    <div id="labeled-SWR" class="vignette-list">
+      <h3>Labelled as 'SWR'</h3>
+      <img v-for="event in events"
+           v-if="event.label == 'SWR'"
            v-bind:src="imageSrc(event)">
     </div>
   </div>

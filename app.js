@@ -19,21 +19,12 @@ let labelApp = new Vue({
         label: null,
         comment: '',
       },
+      {
+        id: 269,
+        label: 'Not SWR',
+        comment: '',
+      },
     ],
-  },
-  computed: {
-    unlabeledEvents: function () {
-      return this.events.filter((event) => {
-        return event.label == null
-      })},
-    eventsLabeledSWR: function () {
-      return this.events.filter((event) => {
-        return event.label == 'SWR'
-      })},
-    eventsLabeledNotSWR: function () {
-      return this.events.filter((event) => {
-        return event.label == 'NotSWR'
-      })},
   },
   methods: {
     imageSrc: (event) => {
