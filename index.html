@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Label putative SWR events</title>
+  <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+  <!-- Attributes with the prefix "v-" are
+       parsed by the JavaScript UI framework "Vue".
+       See: https://vuejs.org
+  -->
+  <div id="label-app">
+    <div id="unlabeled-events">
+      <img v-for="event in unlabeledEvents"
+           v-bind:src="imageSrc(event)">
+    </div>
+  </div>
+
+  <script src="lib/vue.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
