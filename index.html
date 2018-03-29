@@ -19,50 +19,45 @@
 
       <h4>Unlabelled events</h4>
       <div class="vignette-container">
-        <img v-for="event in events"
-             v-if="(event.label == null) && (event.id != activeEventId)"
-             v-bind:src="imageSrc(event)"
-             v-on:click="activeEventId = event.id">
+        <img v-for="event in events.unlabelled"
+             v-bind:src="imageSrc(event)">
       </div>
     </div>
 
     <div id="active-event">
       <div class="vignette-container">
-        <img v-if="activeEventId != null"
-             v-bind:src="imageSrc(getEvent(activeEventId))">
+        <img v-if="events.activeEvent != null"
+             v-bind:src="imageSrc(events.activeEvent)">
       </div>
-      <button v-on:click="onLabel('Not SWR')"
+      <button v-on:click="labelActiveEvent('not_SWR')"
               class="btn btn-outline-primary">
         (<) Label Not SWR
       </button>
-      <button v-on:click="onLabel('SWR')"
+      <button v-on:click="labelActiveEvent('SWR')"
               class="btn btn-outline-primary">
         Label SWR (>)
       </button>
     </div>
 
     <div id="labelled-not-SWR" class="vignette-list">
-
       <h4>Probably not an SWR event</h4>
       <div class="vignette-container">
-        <img v-for="event in events"
-             v-if="(event.label == 'Not SWR') && (event.id != activeEventId)"
+        <img v-for="event in events.not_SWR"
              v-bind:src="imageSrc(event)"
-             v-on:click="activeEventId = event.id">
+             v-on:click="unlabel(event, 'not_SWR')">
       </div>
     </div>
     <div id="labelled-SWR" class="vignette-list">
-
       <h4>Probably an SWR event</h4>
       <div class="vignette-container">
-        <img v-for="event in events"
-             v-if="(event.label == 'SWR') && (event.id != activeEventId)"
+        <img v-for="event in events.SWR"
              v-bind:src="imageSrc(event)"
-             v-on:click="activeEventId = event.id">
+             v-on:click="unlabel(event, 'SWR')">
       </div>
     </div>
   </div>
 
+  <script src="lib/lodash.js"></script>
   <script src="lib/vue.js"></script>
   <script src="app.js"></script>
 </body>
