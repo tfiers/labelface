@@ -1,6 +1,7 @@
 'use strict';
 
-const backend = 'http://localhost:3000'
+// const backend = 'http://localhost:3000'
+const backend = 'https://labelback.herokuapp.com'
 
 let labelApp = new Vue({
   el: '#label-app',
