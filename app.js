@@ -14,7 +14,7 @@ let labelApp = new Vue({
   },
   methods: {
     imageSrc: (event) => {
-      return `D:\\thesis\\data\\Vignettes\\${event.id}.png`
+      return `img/vignettes/${event.id}.png`
     },
     loadUnlabelledEvent: function() {
       let e = this.events.unlabelled.shift()
