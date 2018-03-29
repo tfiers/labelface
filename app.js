@@ -1,20 +1,34 @@
 'use strict';
 
-let dummyRange = Array(1000).fill().map((v,i)=>({id: i}))
+const backend = 'http://localhost:3000'
 
 let labelApp = new Vue({
   el: '#label-app',
-  data: {
-    events: {
-      'unlabelled': dummyRange,
+  created: function() {
+    this.fetchState()
+    this.setupKeybindings()
+  },
+  data: { 
+    'events': {
+      'unlabelled': [],
       'not_SWR': [],
       'SWR': [],
       'activeEvent': null,
     },
   },
+  // watch: {
+  //   events: {
+  //     // Save on backend
+  //     // handler: updateMeshes,
+  //   },
+  // },
   methods: {
-    imageSrc: (event) => {
-      return `img/vignettes/${event.id}.png`
+    fetchState: function() {
+      let _this = this
+      $.getJSON(backend, function(data) {
+        _this.events = data.events
+        _this.loadUnlabelledEvent()
+      })
     },
     loadUnlabelledEvent: function() {
       let e = this.events.unlabelled.shift()
@@ -22,9 +36,20 @@ let labelApp = new Vue({
         this.events.activeEvent = e
       }
     },
+    setupKeybindings: function() {
+      let _this = this
+      window.addEventListener('keyup', function(e) {
+        if (e.which == 37) {
+          _this.labelActiveEvent('not_SWR')
+        }
+        else if (e.which == 39) {
+          _this.labelActiveEvent('SWR')
+        }
+      })
+    },
     labelActiveEvent: function(label) {
       /**
-       * Move the active event to the list specified by 'label'.
+       * Move the currently active event to the list specified by 'label'.
        */
       let e = this.events.activeEvent
       if (e != null) {
@@ -35,25 +60,9 @@ let labelApp = new Vue({
     unlabel: function(event, label) {
       _.pull(this.events[label], event)
       this.events.unlabelled.unshift(event)
-    }
-  },
-  watch: {
-    events: {
-      // Save on backend
-      // handler: updateMeshes,
     },
-  },
-  created: function() {
-    this.loadUnlabelledEvent()
-
-    let v = this
-    window.addEventListener('keyup', function(e) {
-      if (e.which == 37) {
-        v.labelActiveEvent('not_SWR')
-      }
-      else if (e.which == 39) {
-        v.labelActiveEvent('SWR')
-      }
-    })
+    imageSrc: (event) => {
+      return `img/vignettes/${event.id}.png`
+    },
   },
 });
