@@ -42,6 +42,11 @@ h4 {
 	float: right;
 }
 
-#labelled-SWR, #labelled-not-SWR {
+.clickable {
 	cursor: pointer;
+	border: 1px solid white;
+}
+
+.clickable:hover {
+	border: 1px solid black;
 }
