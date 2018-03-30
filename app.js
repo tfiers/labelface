@@ -1,7 +1,12 @@
 'use strict'
 
-const backend = 'http://localhost:3000'
-// const backend = 'https://labelback.herokuapp.com'
+let backend
+if (location.hostname == '') {
+  backend = 'http://localhost:3000'
+}
+else {
+  backend = 'https://labelback.herokuapp.com'
+}
 
 moment.fn.fromNowOrNow = function(a) {
   let now = moment()
