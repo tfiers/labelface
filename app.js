@@ -1,7 +1,7 @@
 'use strict';
 
-// const backend = 'http://localhost:3000'
-const backend = 'https://labelback.herokuapp.com'
+const backend = 'http://localhost:3000'
+// const backend = 'https://labelback.herokuapp.com'
 
 let labelApp = new Vue({
   el: '#label-app',
@@ -17,16 +17,15 @@ let labelApp = new Vue({
       'activeEvent': null,
     },
   },
-  // watch: {
-  //   events: {
-  //     // Save on backend
-  //     // handler: updateMeshes,
-  //   },
-  // },
+  watch: {
+    events: {
+      handler: console.log,
+    },
+  },
   methods: {
     fetchState: function() {
       let _this = this
-      $.getJSON(backend, function(data) {
+      $.getJSON(`${backend}/fetch`, function(data) {
         _this.events = data.events
         _this.loadUnlabelledEvent()
       })
