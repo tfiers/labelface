@@ -53,9 +53,9 @@ let labelApp = new Vue({
         _this.loadUnlabelledEvent()
       })
     },
-    saveState: function() {
-      let _this = this
-      _.debounce(() => {
+    saveState: _.debounce(function() {
+        let _this = this
+        console.log('h')
         $.ajax(`${backend}/save`, {
           type: 'POST',
           contentType: 'application/json',
@@ -70,8 +70,7 @@ let labelApp = new Vue({
       {
         leading: true,
         trailing: true,
-      })
-    },
+      }),
     loadUnlabelledEvent: function() {
       if (this.events.activeEvent == null) {
         let e = this.events.unlabelled.shift()
