@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 
 const backend = 'http://localhost:3000'
 // const backend = 'https://labelback.herokuapp.com'
@@ -16,10 +16,14 @@ let labelApp = new Vue({
       'SWR': [],
       'activeEvent': null,
     },
+    'last_save': null,
   },
   watch: {
     events: {
-      handler: console.log,
+      deep: true,
+      handler: function() {
+        this.saveState()
+      },
     },
   },
   methods: {
@@ -30,6 +34,22 @@ let labelApp = new Vue({
         _this.loadUnlabelledEvent()
       })
     },
+    saveState: _.debounce(function() {
+      let _this = this
+      $.ajax(`${backend}/save`, {
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify({events: _this.events}),
+      })
+      .done(function() {
+        _this.last_save = Date.now()
+      })
+    },
+    500,
+    {
+      leading: true,
+      trailing: true,
+    }),
     loadUnlabelledEvent: function() {
       let e = this.events.unlabelled.shift()
       if (e != null) {
