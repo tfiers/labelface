@@ -23,11 +23,9 @@ h4 {
 .vignette-list > .vignette-container {
 	white-space: nowrap;
 	overflow-x: scroll;
-	cursor: pointer;
 }
 
 .vignette-list > .vignette-container > img {
-	cursor: pointer;
 	height: 150px;
 }
 
@@ -42,4 +40,8 @@ h4 {
 
 #labelled-SWR {
 	float: right;
+}
+
+#labelled-SWR, #labelled-not-SWR {
+	cursor: pointer;
 }
