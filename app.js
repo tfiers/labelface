@@ -55,7 +55,6 @@ let labelApp = new Vue({
     },
     saveState: _.debounce(function() {
         let _this = this
-        console.log('h')
         $.ajax(`${backend}/save`, {
           type: 'POST',
           contentType: 'application/json',
