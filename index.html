@@ -20,11 +20,14 @@
 
       <div class="col-md-6">
 
-        <div id="unlabelled-events" class="vignette-list">
-          <h5>Unlabelled events</h5>
-          <div class="vignette-container">
-            <img v-for="event in events.unlabelled"
-                 v-bind:src="imageSrc(event)">
+        <div class="card">
+          <h5 class="card-header">Unlabelled events</h5>
+          <div id="unlabelled-events"
+               class="vignette-list">
+            <div class="vignette-container">
+              <img v-for="event in events.unlabelled"
+                   v-bind:src="imageSrc(event)">
+            </div>
           </div>
         </div>
 
@@ -41,7 +44,9 @@
                   class="btn btn-outline-dark">
             Label SWR (>)
           </button>
-          <p>Last save: {{ last_save_pretty }}</p>
+          <div class="text-muted">
+            Last save: {{ last_save_pretty }}
+          </div>
         </div>
 
       </div>
@@ -51,26 +56,35 @@
 
     <div class="row">
 
-      <div id="labelled-not-SWR"
-           class="col-md-6 vignette-list">
-        <h5>Probably not an SWR event</h5>
-        <div class="vignette-container">
-          <img v-for="event in events.not_SWR"
-               v-bind:src="imageSrc(event)"
-               v-on:click="unlabel(event, 'not_SWR')"
-               class="clickable"
-               title="Send back to queue">
+      <div class="col-md-6">
+        <div class="card">
+        <h5 class="card-header">Probably not an SWR event</h5 >
+          <div id="labelled-not-SWR"
+              class="vignette-list">
+            <div class="vignette-container">
+              <img v-for="event in events.not_SWR"
+                  v-bind:src="imageSrc(event)"
+                  v-on:click="unlabel(event, 'not_SWR')"
+                  class="clickable"
+                  title="Send back to queue">
+            </div>
+          </div>
         </div>
       </div>
-      <div id="labelled-SWR"
-           class="col-md-6 vignette-list">
-        <h5>Probably an SWR event</h5>
-        <div class="vignette-container">
-          <img v-for="event in events.SWR"
-               v-bind:src="imageSrc(event)"
-               v-on:click="unlabel(event, 'SWR')"
-               class="clickable"
-               title="Send back to queue">
+
+      <div class="col-md-6">
+        <div class="card">
+          <h5 class="card-header">Probably an SWR event</h5>
+          <div id="labelled-SWR"
+              class="vignette-list">
+            <div class="vignette-container">
+              <img v-for="event in events.SWR"
+                  v-bind:src="imageSrc(event)"
+                  v-on:click="unlabel(event, 'SWR')"
+                  class="clickable"
+                  title="Send back to queue">
+            </div>
+          </div>
         </div>
       </div>
 
