@@ -34,11 +34,11 @@
                  v-bind:src="imageSrc(events.activeEvent)">
           </div>
           <button v-on:click="labelActiveEvent('not_SWR')"
-                  class="btn btn-outline-primary">
+                  class="btn btn-outline-dark">
             (<) Label Not SWR
           </button>
           <button v-on:click="labelActiveEvent('SWR')"
-                  class="btn btn-outline-primary">
+                  class="btn btn-outline-dark">
             Label SWR (>)
           </button>
           <p>Last save: {{ last_save_pretty }}</p>
