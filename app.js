@@ -27,6 +27,9 @@ let labelApp = new Vue({
     setInterval(function() { _this.prettifyLastSave() },
                 1000)
   },
+  mounted: function() {
+    $('#instructions').modal('show')
+  },
   data: { 
     'events': {
       'unlabelled': [],

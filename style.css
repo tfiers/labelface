@@ -36,10 +36,10 @@
 }
 
 #context > img {
-	width: 1000px;
+	width: 1015px;
 }
 
-span {
+.scalebar {
 	display: block;
 	position: absolute;
 	background: black;
@@ -59,4 +59,14 @@ span {
 	height: 1px;
 	bottom: 10%;
 	left: 20px;
+}
+
+.modal-body > h5 {
+	margin-top: 1.5em;
+}
+
+@media (min-width: 992px) {
+	.modal-lg {
+		max-width: 45%;
+	}
 }

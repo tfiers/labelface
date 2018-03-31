@@ -2,7 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Label possible SWR events</title>
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Label potential SWR events</title>
   <link rel="stylesheet"
         href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
@@ -16,7 +18,7 @@
   -->
   <div id="label-app" class="container">
 
-    <div class="row mb-3 mt-3">
+    <div class="row mt-3">
 
       <div class="col-md-6">
 
@@ -31,26 +33,34 @@
           </div>
         </div>
 
-        <div class="card border-primary">
+        <div class="card">
           <div class="card-body row">
             <div id="active-event"
                  class="col-sm-auto">
               <div class="vignette-container">
-                <span id="voltage"></span>
+                <span class="scalebar" id="voltage"></span>
                 <img v-if="events.activeEvent != null"
                      v-bind:src="imageSrc(events.activeEvent)">
-                <span id="time"></span>
+                <span class="scalebar" id="time"></span>
               </div>
             </div>
             <div class="col-sm d-flex">
               <div class="mt-auto">
+                <button class="btn btn-secondary"
+                        data-toggle="modal"
+                        data-target="#instructions">
+                  Instructions
+                </button>
+                <br>
                 <button v-on:click="labelActiveEvent('not_SWR')"
-                        class="btn btn-outline-dark mt-1">
-                  (<) Label Not SWR
+                        class="btn btn-primary mt-1"
+                        title="Shortcut: left arrow key">
+                  ← Label Not SWR
                 </button>
                 <button v-on:click="labelActiveEvent('SWR')"
-                        class="btn btn-outline-dark mt-1">
-                  Label SWR (>)
+                        class="btn btn-primary mt-1"
+                        title="Shortcut: right arrow key">
+                  Label SWR →
                 </button>
                 <div class="text-muted">
                   Last save: {{ last_save_pretty }}
@@ -65,7 +75,7 @@
       <div class="col-md-6">
 
         <div id="context"
-             class="card border-primary">
+             class="card">
           <img v-if="events.activeEvent != null"
                v-bind:src="imageSrcContext(events.activeEvent)">
         </div>
@@ -75,7 +85,7 @@
 
     </div>
 
-    <div class="row">
+    <div class="row mt-3">
 
       <div class="col-md-6 mb-3">
         <div class="card">
@@ -111,9 +121,61 @@
 
     </div>
 
+    <div id="instructions"
+         class="modal fade">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Label potential SWR events</h5>
+            <button type="button"
+                    class="close"
+                    data-dismiss="modal">
+              <span>&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p class="text-muted">This dialog box can be reopened at any time by clicking 'Instructions'.</p>
+
+            <p>Thanks for taking the time to help.</p>
+
+            <h5>Workflow</h5>
+            <!-- <p>First, select a set of events to label using the dropdown menu.</p> -->
+            <ul class="pl-3">
+              <li>Events are presented one by one, taken from the 'Unlabelled' queue at the top.</li>
+              <li>Each event is represented by two voltage traces: one from an electrode in the pyramidal cell layer (the top trace), and one from an electrode in the stratum radiatum.</li>
+              <li>Click one of the two blue 'Label' buttons (or use the left and right arrow keys) to classify the current event as either 'Probably <em>not</em> an SWR event', or 'Probably an SWR event'.</li>
+            </ul>
+            <p class="text-muted">If you think you have made a mistake, you can click one of the labelled events in the lists at the bottom to move this event back to the 'Unlabelled' queue.</p>
+
+            <h5>Active event</h5>
+            <p>The scalebars represent 50 ms and 1 mV.</p>
+
+            <h5>Context plot</h5>
+            <p>The scalebar at the beginning of the 16-channel context plot on the right also represents 1 mV. The unit for the time axis is seconds since the beginning of the recording.</p>
+            <p>The blue vertical line marks the (starting) time of the currently active event. The grey lines correspond to other detected events.</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button"
+                    class="btn btn-primary"
+                    data-dismiss="modal">
+              Let's get started
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 
   <script src="lib/jquery-3.3.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+          integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+          crossorigin="anonymous">
+  </script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+          integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+          crossorigin="anonymous">
+  </script>
   <script src="lib/moment.js"></script>
   <script src="lib/lodash.js"></script>
   <script src="lib/vue.js"></script>
