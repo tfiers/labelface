@@ -13,6 +13,10 @@
 	height: 170px;
 }
 
+#active-event > .vignette-container {
+	height: 150px;
+}
+
 #unlabelled-events {
 	direction: rtl;
 }
