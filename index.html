@@ -14,52 +14,68 @@
        parsed by the JavaScript UI framework "Vue".
        See: https://vuejs.org
   -->
-  <div id="label-app">
-    <div id="unlabelled-events" class="vignette-list">
+  <div id="label-app" class="container">
 
-      <h4>Unlabelled events</h4>
-      <div class="vignette-container">
-        <img v-for="event in events.unlabelled"
-             v-bind:src="imageSrc(event)">
+    <div class="row">
+
+      <div class="col-md-6">
+
+        <div id="unlabelled-events" class="vignette-list">
+          <h4>Unlabelled events</h4>
+          <div class="vignette-container">
+            <img v-for="event in events.unlabelled"
+                 v-bind:src="imageSrc(event)">
+          </div>
+        </div>
+
+        <div id="active-event">
+          <div class="vignette-container">
+            <img v-if="events.activeEvent != null"
+                 v-bind:src="imageSrc(events.activeEvent)">
+          </div>
+          <button v-on:click="labelActiveEvent('not_SWR')"
+                  class="btn btn-outline-primary">
+            (<) Label Not SWR
+          </button>
+          <button v-on:click="labelActiveEvent('SWR')"
+                  class="btn btn-outline-primary">
+            Label SWR (>)
+          </button>
+          <p>Last save: {{ last_save_pretty }}</p>
+        </div>
+
       </div>
+
+
     </div>
 
-    <div id="active-event">
-      <div class="vignette-container">
-        <img v-if="events.activeEvent != null"
-             v-bind:src="imageSrc(events.activeEvent)">
+    <div class="row">
+
+      <div id="labelled-not-SWR"
+           class="col-md-6 vignette-list">
+        <h4>Probably not an SWR event</h4>
+        <div class="vignette-container">
+          <img v-for="event in events.not_SWR"
+               v-bind:src="imageSrc(event)"
+               v-on:click="unlabel(event, 'not_SWR')"
+               class="clickable"
+               title="Send back to queue">
+        </div>
       </div>
-      <button v-on:click="labelActiveEvent('not_SWR')"
-              class="btn btn-outline-primary">
-        (<) Label Not SWR
-      </button>
-      <button v-on:click="labelActiveEvent('SWR')"
-              class="btn btn-outline-primary">
-        Label SWR (>)
-      </button>
-      <p>Last save: {{ last_save_pretty }}</p>
+      <div id="labelled-SWR"
+           class="col-md-6 vignette-list">
+        <h4>Probably an SWR event</h4>
+        <div class="vignette-container">
+          <img v-for="event in events.SWR"
+               v-bind:src="imageSrc(event)"
+               v-on:click="unlabel(event, 'SWR')"
+               class="clickable"
+               title="Send back to queue">
+        </div>
+      </div>
+
     </div>
 
-    <div id="labelled-not-SWR" class="vignette-list">
-      <h4>Probably not an SWR event</h4>
-      <div class="vignette-container">
-        <img v-for="event in events.not_SWR"
-             v-bind:src="imageSrc(event)"
-             v-on:click="unlabel(event, 'not_SWR')"
-             class="clickable"
-             title="Send back to queue">
-      </div>
-    </div>
-    <div id="labelled-SWR" class="vignette-list">
-      <h4>Probably an SWR event</h4>
-      <div class="vignette-container">
-        <img v-for="event in events.SWR"
-             v-bind:src="imageSrc(event)"
-             v-on:click="unlabel(event, 'SWR')"
-             class="clickable"
-             title="Send back to queue">
-      </div>
-    </div>
   </div>
 
   <script src="lib/jquery-3.3.1.min.js"></script>
