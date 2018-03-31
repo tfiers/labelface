@@ -31,7 +31,7 @@
 }
 
 #context {
-	overflow: scroll;
+	overflow-x: scroll;
 	height: 100%;
 }
 
@@ -46,13 +46,17 @@ span {
 }
 
 #voltage {
+	/* 1 mV */
 	height: 32.15px;
 	width: 1px;
 	top: 45%;
-	left: 20px;
+	left: 18px;
 }
 
 #time {
-	width: 50px;
+	/* 50 ms */
+	width: 58.04px;
 	height: 1px;
+	bottom: 10%;
+	left: 20px;
 }

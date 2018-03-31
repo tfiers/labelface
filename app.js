@@ -113,5 +113,8 @@ let labelApp = new Vue({
     imageSrc: (event) => {
       return `img/vignettes/${event.id}.png`
     },
+    imageSrcContext: (event) => {
+      return `img/context/${event.id}.png`
+    },
   },
 });
