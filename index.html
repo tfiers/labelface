@@ -34,13 +34,15 @@
         <div class="card">
           <div class="card-body row">
             <div id="active-event"
-                 class="col-sm-4">
+                 class="col-sm-auto">
               <div class="vignette-container">
+                <span id="voltage"></span>
                 <img v-if="events.activeEvent != null"
                      v-bind:src="imageSrc(events.activeEvent)">
+                <span id="time"></span>
               </div>
             </div>
-            <div class="col-sm-8 d-flex">
+            <div class="col-sm d-flex">
               <div class="mt-auto">
                 <button v-on:click="labelActiveEvent('not_SWR')"
                         class="btn btn-outline-dark mt-1">
@@ -60,6 +62,16 @@
 
       </div>
 
+      <div class="col-md-6">
+
+        <div id="context"
+             class="card">
+          <img v-if="events.activeEvent != null"
+               v-bind:src="imageSrcContext(events.activeEvent)">
+        </div>
+
+      </div>
+
 
     </div>
 
@@ -69,7 +81,7 @@
         <div class="card">
         <h5 class="card-header">Probably not an SWR event</h5 >
           <div id="labelled-not-SWR"
-              class="vignette-list">
+               class="vignette-list">
             <div class="vignette-container">
               <img v-for="event in events.not_SWR"
                   v-bind:src="imageSrc(event)"
@@ -85,7 +97,7 @@
         <div class="card">
           <h5 class="card-header">Probably an SWR event</h5>
           <div id="labelled-SWR"
-              class="vignette-list">
+               class="vignette-list">
             <div class="vignette-container">
               <img v-for="event in events.SWR"
                   v-bind:src="imageSrc(event)"
