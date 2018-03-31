@@ -21,7 +21,7 @@
       <div class="col-md-6">
 
         <div id="unlabelled-events" class="vignette-list">
-          <h4>Unlabelled events</h4>
+          <h5>Unlabelled events</h5>
           <div class="vignette-container">
             <img v-for="event in events.unlabelled"
                  v-bind:src="imageSrc(event)">
@@ -53,7 +53,7 @@
 
       <div id="labelled-not-SWR"
            class="col-md-6 vignette-list">
-        <h4>Probably not an SWR event</h4>
+        <h5>Probably not an SWR event</h5>
         <div class="vignette-container">
           <img v-for="event in events.not_SWR"
                v-bind:src="imageSrc(event)"
@@ -64,7 +64,7 @@
       </div>
       <div id="labelled-SWR"
            class="col-md-6 vignette-list">
-        <h4>Probably an SWR event</h4>
+        <h5>Probably an SWR event</h5>
         <div class="vignette-container">
           <img v-for="event in events.SWR"
                v-bind:src="imageSrc(event)"
