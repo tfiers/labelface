@@ -38,10 +38,12 @@
             <div id="active-event"
                  class="col-sm-auto">
               <div class="vignette-container">
-                <span class="scalebar" id="voltage"></span>
+                <div v-if="events.activeEvent != null">
+                  <span class="scalebar" id="voltage"></span>
+                  <span class="scalebar" id="time"></span>
+                </div>
                 <img v-if="events.activeEvent != null"
                      v-bind:src="imageSrc(events.activeEvent)">
-                <span class="scalebar" id="time"></span>
               </div>
             </div>
             <div class="col-sm d-flex">
@@ -55,6 +57,7 @@
                 <div v-if="events.activeEvent != null">
                   <input type="text"
                          placeholder="Optional comment"
+                         title="Attach a comment to the event currently in the decision area"
                          class="form-control mt-1"
                          v-model="events.activeEvent.comment">
                   <button v-on:click="labelActiveEvent('not_SWR')"
@@ -91,7 +94,7 @@
 
     </div>
 
-    <div class="row mt-3">
+    <div class="row mt-3 mb-3">
 
       <div class="col-md-6 mb-3">
         <div class="card">

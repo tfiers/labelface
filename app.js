@@ -142,7 +142,7 @@ let labelApp = new Vue({
     },
     vignetteTitle: (event) => {
       let s = 'Click to unlabel'
-      if (event.comment != null) {
+      if (event.comment) {
         s += `\nComment: "${event.comment}"`
       }
       return s
