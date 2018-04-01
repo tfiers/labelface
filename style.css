@@ -5,11 +5,23 @@
 
 .vignette-container > img {
 	height: 150px;
-	border: 1px solid white;
+	border-bottom: 1px solid white;
 }
 
 .vignette-container > img.has-comment {
 	border-bottom: 1px solid #CCC;
+}
+
+.vignette-container > img.has-comment:hover {
+	border-bottom: 1px solid black;
+}
+
+.clickable {
+	cursor: pointer;
+}
+
+.clickable:hover {
+	border-bottom: 1px solid black;
 }
 
 .vignette-container {
@@ -24,14 +36,6 @@
 
 #unlabelled-events {
 	direction: rtl;
-}
-
-.clickable {
-	cursor: pointer;
-}
-
-.clickable:hover {
-	border: 1px solid black;
 }
 
 #context {
