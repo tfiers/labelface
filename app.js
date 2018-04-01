@@ -110,8 +110,15 @@ let labelApp = new Vue({
       this.loadUnlabelledEvent()
     },
     unlabel: function(event, label) {
+      // Move the currently active event back to the 'Unlabelled' queue.
+      let prevActive = this.events.activeEvent
+      if (prevActive != null) {
+        this.events.unlabelled.unshift(prevActive)
+      }
+      // Remove the selected labelled event from its queue
       _.pull(this.events[label], event)
-      this.events.unlabelled.unshift(event)
+      // Make the selected event the active event.
+      this.events.activeEvent = event
       this.loadUnlabelledEvent()
     },
     imageSrc: (event) => {
