@@ -52,16 +52,22 @@
                   Instructions
                 </button>
                 <br>
-                <button v-on:click="labelActiveEvent('not_SWR')"
-                        class="btn btn-primary mt-1"
-                        title="Shortcut: left arrow key">
-                  ← Label Not SWR
-                </button>
-                <button v-on:click="labelActiveEvent('SWR')"
-                        class="btn btn-primary mt-1"
-                        title="Shortcut: right arrow key">
-                  Label SWR →
-                </button>
+                <div v-if="events.activeEvent != null">
+                  <input type="text"
+                         placeholder="Optional comment"
+                         class="form-control mt-1"
+                         v-model="events.activeEvent.comment">
+                  <button v-on:click="labelActiveEvent('not_SWR')"
+                          class="btn btn-primary mt-1"
+                          title="Shortcut: left arrow key">
+                    ← Label Not SWR
+                  </button>
+                  <button v-on:click="labelActiveEvent('SWR')"
+                          class="btn btn-primary mt-1"
+                          title="Shortcut: right arrow key">
+                    Label SWR →
+                  </button>
+                </div>
                 <div id="last-save"
                      class="text-muted">
                   <small>Last save: {{ last_save_pretty }}</small>

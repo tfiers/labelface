@@ -30,7 +30,7 @@ let labelApp = new Vue({
   mounted: function() {
     $('#instructions').modal('show')
   },
-  data: { 
+  data: {
     'events': {
       'unlabelled': [],
       'not_SWR': [],
