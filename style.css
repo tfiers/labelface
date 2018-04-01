@@ -8,6 +8,10 @@
 	border: 1px solid white;
 }
 
+.vignette-container > img.has-comment {
+	border-bottom: 1px solid #CCC;
+}
+
 .vignette-container {
 	/* Extra pixels for scroll bar */
 	height: 170px;

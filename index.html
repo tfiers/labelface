@@ -105,7 +105,8 @@
                    v-on:mouseleave="hovered = null"
                    v-on:click="unlabel(event, 'not_SWR')"
                    class="clickable"
-                   title="Send back to queue">
+                   v-bind:class="{ 'has-comment': event.comment }"
+                   v-bind:title="vignetteTitle(event)">
             </div>
           </div>
         </div>
@@ -123,7 +124,8 @@
                    v-on:mouseover="hovered = event"
                    v-on:mouseleave="hovered = null"
                    class="clickable"
-                   title="Send back to queue">
+                   v-bind:class="{ 'has-comment': event.comment }"
+                   v-bind:title="vignetteTitle(event)">
             </div>
           </div>
         </div>

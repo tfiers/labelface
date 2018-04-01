@@ -28,7 +28,7 @@ let labelApp = new Vue({
                 1000)
   },
   mounted: function() {
-    $('#instructions').modal('show')
+    // $('#instructions').modal('show')
   },
   data: {
     'events': {
@@ -139,6 +139,13 @@ let labelApp = new Vue({
     },
     imageSrcContext: (event) => {
       return `img/context/${event.id}.png`
+    },
+    vignetteTitle: (event) => {
+      let s = 'Click to unlabel'
+      if (event.comment != null) {
+        s += `\nComment: "${event.comment}"`
+      }
+      return s
     },
   },
 });
