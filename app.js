@@ -49,6 +49,19 @@ let labelApp = new Vue({
       },
     },
   },
+  computed: {
+    contextEvent: function() {
+      if (this.hovered != null) {
+        return this.imageSrcContext(this.hovered)
+      }
+      else if (this.events.activeEvent != null) {
+        return this.imageSrcContext(this.events.activeEvent)
+      }
+      else {
+        return ''
+      }
+    },
+  },
   methods: {
     fetchState: function() {
       let _this = this
