@@ -95,10 +95,12 @@
                class="vignette-list">
             <div class="vignette-container">
               <img v-for="event in events.not_SWR"
-                  v-bind:src="imageSrc(event)"
-                  v-on:click="unlabel(event, 'not_SWR')"
-                  class="clickable"
-                  title="Send back to queue">
+                   v-bind:src="imageSrc(event)"
+                   v-on:mouseover="hovered = event.id"
+                   v-on:mouseleave="hovered = null"
+                   v-on:click="unlabel(event, 'not_SWR')"
+                   class="clickable"
+                   title="Send back to queue">
             </div>
           </div>
         </div>
@@ -111,10 +113,12 @@
                class="vignette-list">
             <div class="vignette-container">
               <img v-for="event in events.SWR"
-                  v-bind:src="imageSrc(event)"
-                  v-on:click="unlabel(event, 'SWR')"
-                  class="clickable"
-                  title="Send back to queue">
+                   v-bind:src="imageSrc(event)"
+                   v-on:click="unlabel(event, 'SWR')"
+                   v-on:mouseover="hovered = event.id"
+                   v-on:mouseleave="hovered = null"
+                   class="clickable"
+                   title="Send back to queue">
             </div>
           </div>
         </div>

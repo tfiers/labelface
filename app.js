@@ -39,6 +39,7 @@ let labelApp = new Vue({
     },
     'last_save': null,
     'last_save_pretty': null,
+    'hovered': null,
   },
   watch: {
     events: {
