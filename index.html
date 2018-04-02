@@ -21,6 +21,42 @@
   -->
   <div id="label-app" class="container">
 
+    <nav class="navbar navbar-light bg-light">
+      <div class="d-flex">
+        <button class="btn btn-outline-info mr-4"
+                data-toggle="modal"
+                data-target="#instructions">
+          Instructions
+        </button>
+        <form class="form-inline">
+          <label for="subset-selector"
+                 class="navbar-text mr-2">
+            Subset of events:
+          </label>
+          <select v-model="selected_subset"
+                  id="subset-selector"
+                  class="form-control"
+                  title="Select the subset of events that are loaded">
+            <option disabled value="">
+              Select subset
+            </option>
+            <option v-for="s in subsets">
+              {{ s }}
+            </option>
+          </select>
+        </form>
+      </div>
+
+      <div class="d-flex">
+        <span class="navbar-text mr-4">
+          {{ username }}
+        </span>
+        <button class="btn btn-outline-danger">
+          Sign out
+        </button>
+      </div>
+    </nav>
+
     <loading :active.sync="loading"></loading>
 
     <div class="row mt-3">
@@ -53,27 +89,6 @@
             </div>
             <div class="col-sm d-flex">
               <div class="mt-auto">
-                <div class="form-row">
-                  <div class="col-5">
-                    <button class="btn btn-secondary"
-                            data-toggle="modal"
-                            data-target="#instructions">
-                      Instructions
-                    </button>
-                  </div>
-                  <div class="col">
-                    <select v-model="selected_subset"
-                            class="form-control"
-                            title="Select the events that are loaded">
-                      <option disabled value="">
-                        Select subset
-                      </option>
-                      <option v-for="s in subsets">
-                        {{ s }}
-                      </option>
-                    </select>
-                  </div>
-                </div>
                 <div v-if="events.activeEvent != null">
                   <input type="text"
                          placeholder="Optional comment"

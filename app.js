@@ -36,6 +36,7 @@ let labelApp = new Vue({
   },
   data: {
     'loading': true,
+    'username': 'tomasf',
     'subsets': [],
     'selected_subset': '',
     'events': {
