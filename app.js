@@ -28,7 +28,7 @@ let labelApp = new Vue({
                 1000)
   },
   mounted: function() {
-    // $('#instructions').modal('show')
+    $('#instructions').modal('show')
   },
   data: {
     'subsets': [],

@@ -58,7 +58,8 @@
                   </div>
                   <div class="col">
                     <select v-model="selected_subset"
-                            class="form-control">
+                            class="form-control"
+                            title="Select the events that are loaded">
                       <option disabled value="">
                         Select subset
                       </option>
@@ -176,14 +177,12 @@
               <li>Each event is represented by two voltage traces: one from an electrode in the pyramidal cell layer (the top trace), and one from an electrode in the stratum radiatum.</li>
               <li>Click one of the two blue 'Label' buttons (or use the left and right arrow keys) to classify the current event as either 'Probably <em>not</em> an SWR event', or 'Probably an SWR event'.</li>
             </ul>
-            <p class="text-muted">If you think you have made a mistake, you can click one of the labelled events in the lists at the bottom to move it back to the decision area.</p>
+            <p class="text-muted">If you think you have made a mistake, you can click one of the already labelled events at the bottom of the page to move it back to the decision area.</p>
 
-            <h5>Active event</h5>
-            <p>The scalebars represent 50 ms and 1 mV.</p>
-
-            <h5>Context plot</h5>
-            <p>The scalebar at the beginning of the 16-channel context plot on the right also represents 1 mV. The unit for the time axis is seconds since the beginning of the recording.</p>
-            <p>The blue vertical line marks the (starting) time of the currently active event. The grey lines correspond to other detected events.</p>
+            <h5>The plots</h5>
+            <p>The event that is currently active can be seen in the middle left. The scalebars represent 50 ms and 1 mV.</p>
+            <p>To the right, you can see a more comprehensive plot of the current event: all 16 channels are plotted (instead of only two), and the plot ranges from 1000 ms before to 1000 ms after the event.
+            <p>In this large plot, the blue vertical line marks the currently active event. The grey vertical lines correspond to other detected events. The scalebar at the beginning of this plot represents 1 mV.</p>
           </div>
           <div class="modal-footer">
             <button type="button"
