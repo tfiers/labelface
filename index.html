@@ -48,12 +48,26 @@
             </div>
             <div class="col-sm d-flex">
               <div class="mt-auto">
-                <button class="btn btn-secondary"
-                        data-toggle="modal"
-                        data-target="#instructions">
-                  Instructions
-                </button>
-                <br>
+                <div class="form-row">
+                  <div class="col-5">
+                    <button class="btn btn-secondary"
+                            data-toggle="modal"
+                            data-target="#instructions">
+                      Instructions
+                    </button>
+                  </div>
+                  <div class="col">
+                    <select v-model="selected_subset"
+                            class="form-control">
+                      <option disabled value="">
+                        Select subset
+                      </option>
+                      <option v-for="s in subsets">
+                        {{ s }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
                 <div v-if="events.activeEvent != null">
                   <input type="text"
                          placeholder="Optional comment"
@@ -72,7 +86,8 @@
                   </button>
                 </div>
                 <div id="last-save"
-                     class="text-muted">
+                     class="text-muted"
+                     v-if="last_save">
                   <small>Last save: {{ last_save_pretty }}</small>
                 </div>
               </div>

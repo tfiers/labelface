@@ -21,7 +21,7 @@ moment.fn.fromNowOrNow = function(a) {
 let labelApp = new Vue({
   el: '#label-app',
   created: function() {
-    this.fetchState()
+    this.fetchSubsets()
     this.setupKeybindings()
     let _this = this
     setInterval(function() { _this.prettifyLastSave() },
@@ -31,6 +31,8 @@ let labelApp = new Vue({
     // $('#instructions').modal('show')
   },
   data: {
+    'subsets': [],
+    'selected_subset': '',
     'events': {
       'unlabelled': [],
       'not_SWR': [],
@@ -42,6 +44,11 @@ let labelApp = new Vue({
     'hovered': null,
   },
   watch: {
+    selected_subset: {
+      handler: function() {
+        this.fetchState()
+      },
+    },
     events: {
       deep: true,
       handler: function() {
@@ -63,19 +70,36 @@ let labelApp = new Vue({
     },
   },
   methods: {
-    fetchState: function() {
+    fetchSubsets: function() {
       let _this = this
-      $.getJSON(`${backend}/fetch`, function(data) {
+      $.getJSON(`${backend}/subsets`, function(data) {
+        _this.subsets = data
+        _this.selected_subset = _this.subsets[0]
+      })
+    },
+    fetchState: function() {
+      const url = `${backend}/state`
+      const params = {
+        'author': 'ik',
+        'subset': this.selected_subset,
+      }
+      const _this = this
+      $.getJSON(url, params, function(data) {
         _this.events = data.events
         _this.loadUnlabelledEvent()
       })
     },
     saveState: _.debounce(function() {
-        let _this = this
-        $.ajax(`${backend}/save`, {
+        const data = {
+          'author': 'ik',
+          'subset': this.selected_subset,
+          'events': this.events,
+        }
+        const _this = this
+        $.ajax(`${backend}/state`, {
           type: 'POST',
           contentType: 'application/json',
-          data: JSON.stringify({events: _this.events}),
+          data: JSON.stringify(data),
         })
         .done(function() {
           _this.last_save = moment()
