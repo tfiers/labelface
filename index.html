@@ -9,7 +9,10 @@
         href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
         crossorigin="anonymous">
-  <link rel="stylesheet" type="text/css" href="style.css">
+  <link rel="stylesheet"
+        href="style.css">
+  <link rel="stylesheet"
+        href="lib/vue-loading.min.css">
 </head>
 <body>
   <!-- Attributes with the prefix "v-" are
@@ -17,6 +20,8 @@
        See: https://vuejs.org
   -->
   <div id="label-app" class="container">
+
+    <loading :active.sync="loading"></loading>
 
     <div class="row mt-3">
 
@@ -209,6 +214,7 @@
   <script src="lib/moment.js"></script>
   <script src="lib/lodash.js"></script>
   <script src="lib/vue.js"></script>
+  <script src="lib/vue-loading.min.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

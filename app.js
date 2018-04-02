@@ -18,19 +18,24 @@ moment.fn.fromNowOrNow = function(a) {
   }
 }
 
+Vue.use(VueLoading)
+
 let labelApp = new Vue({
   el: '#label-app',
+  components: {
+    loading: VueLoading,
+  },
   created: function() {
     this.fetchSubsets()
     this.setupKeybindings()
     let _this = this
-    setInterval(function() { _this.prettifyLastSave() },
-                1000)
+    setInterval(() => _this.prettifyLastSave(), 1000)
   },
   mounted: function() {
-    $('#instructions').modal('show')
+    // $('#instructions').modal('show')
   },
   data: {
+    'loading': true,
     'subsets': [],
     'selected_subset': '',
     'events': {
@@ -46,6 +51,7 @@ let labelApp = new Vue({
   watch: {
     selected_subset: {
       handler: function() {
+        this.loading = true
         this.fetchState()
       },
     },
@@ -87,6 +93,7 @@ let labelApp = new Vue({
       $.getJSON(url, params, function(data) {
         _this.events = data.events
         _this.loadUnlabelledEvent()
+        _this.loading = false
       })
     },
     saveState: _.debounce(function() {
