@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Label potential SWR events</title>
+  <link rel="stylesheet" href="lib/bootstrap.min.css">
+  <link rel="stylesheet" href="lib/vue-loading.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Attributes with the prefix "v-" are
+       parsed by the JavaScript UI framework "Vue".
+       See: https://vuejs.org
+  -->
+  <div id="label-app" class="container">
+
+    <nav class="navbar navbar-light bg-light">
+      <div class="d-flex">
+        <button class="btn btn-outline-info mr-4"
+                data-toggle="modal"
+                data-target="#instructions">
+          Instructions
+        </button>
+        <form class="form-inline">
+          <label for="subset-selector"
+                 class="navbar-text mr-2">
+            Subset of events:
+          </label>
+          <select v-model="selected_subset"
+                  id="subset-selector"
+                  class="form-control"
+                  title="Select the subset of events that are loaded">
+            <option disabled value="">
+              Select subset
+            </option>
+            <option v-for="s in subsets">
+              {{ s }}
+            </option>
+          </select>
+        </form>
+      </div>
+
+      <div class="d-flex">
+        <span class="navbar-text mr-4">
+          {{ username }}
+        </span>
+        <button class="btn btn-outline-danger">
+          Sign out
+        </button>
+      </div>
+    </nav>
+
+    <loading :active.sync="loading"></loading>
+
+    <div class="row mt-3">
+
+      <div class="col-md-6">
+
+        <div class="card mb-3">
+          <h5 class="card-header">Unlabelled events</h5>
+          <div id="unlabelled-events"
+               class="vignette-list">
+            <div class="vignette-container">
+              <img v-for="event in events.unlabelled"
+                   v-bind:src="imageSrc(event)">
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-body row">
+            <div id="active-event"
+                 class="col-sm-auto">
+              <div class="vignette-container">
+                <div v-if="events.activeEvent != null">
+                  <span class="scalebar" id="voltage"></span>
+                  <span class="scalebar" id="time"></span>
+                </div>
+                <img v-if="events.activeEvent != null"
+                     v-bind:src="imageSrc(events.activeEvent)">
+              </div>
+            </div>
+            <div class="col-sm d-flex">
+              <div class="mt-auto">
+                <div v-if="events.activeEvent != null">
+                  <input type="text"
+                         placeholder="Optional comment"
+                         title="Attach a comment to the event currently in the decision area"
+                         class="form-control mt-1"
+                         v-model="events.activeEvent.comment">
+                  <button v-on:click="labelActiveEvent('not_SWR')"
+                          class="btn btn-primary mt-1"
+                          title="Shortcut: left arrow key">
+                    ← Label Not SWR
+                  </button>
+                  <button v-on:click="labelActiveEvent('SWR')"
+                          class="btn btn-primary mt-1"
+                          title="Shortcut: right arrow key">
+                    Label SWR →
+                  </button>
+                </div>
+                <div id="last-save"
+                     class="text-muted"
+                     v-if="last_save">
+                  <small>Last save: {{ last_save_pretty }}</small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="col-md-6">
+
+        <div id="context"
+             class="card">
+          <img v-bind:src="contextEvent">
+        </div>
+
+      </div>
+
+
+    </div>
+
+    <div class="row mt-3 mb-3">
+
+      <div class="col-md-6 mb-3">
+        <div class="card">
+        <h5 class="card-header">Probably not an SWR event</h5 >
+          <div id="labelled-not-SWR"
+               class="vignette-list">
+            <div class="vignette-container">
+              <img v-for="event in events.not_SWR"
+                   v-bind:src="imageSrc(event)"
+                   v-on:mouseover="hovered = event"
+                   v-on:mouseleave="hovered = null"
+                   v-on:click="unlabel(event, 'not_SWR')"
+                   class="clickable"
+                   v-bind:class="{ 'has-comment': event.comment }"
+                   v-bind:title="vignetteTitle(event)">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="card">
+          <h5 class="card-header">Probably an SWR event</h5>
+          <div id="labelled-SWR"
+               class="vignette-list">
+            <div class="vignette-container">
+              <img v-for="event in events.SWR"
+                   v-bind:src="imageSrc(event)"
+                   v-on:click="unlabel(event, 'SWR')"
+                   v-on:mouseover="hovered = event"
+                   v-on:mouseleave="hovered = null"
+                   class="clickable"
+                   v-bind:class="{ 'has-comment': event.comment }"
+                   v-bind:title="vignetteTitle(event)">
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div id="instructions"
+         class="modal fade"
+         tabindex="-1">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Label potential SWR events</h5>
+            <button type="button"
+                    class="close"
+                    data-dismiss="modal">
+              <span>&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p class="text-muted">This dialog box can be reopened at any time by clicking 'Instructions'.</p>
+
+            <p>Thanks for taking the time to help.</p>
+
+            <h5>Workflow</h5>
+            <!-- <p>First, select a set of events to label using the dropdown menu.</p> -->
+            <ul class="pl-3">
+              <li>Events are presented one by one, taken from the 'Unlabelled' queue at the top.</li>
+              <li>Each event is represented by two voltage traces: one from an electrode in the pyramidal cell layer (the top trace), and one from an electrode in the stratum radiatum.</li>
+              <li>Click one of the two blue 'Label' buttons (or use the left and right arrow keys) to classify the current event as either 'Probably <em>not</em> an SWR event', or 'Probably an SWR event'.</li>
+            </ul>
+            <p class="text-muted">If you think you have made a mistake, you can click one of the already labelled events at the bottom of the page to move it back to the decision area.</p>
+
+            <h5>The plots</h5>
+            <p>The event that is currently active can be seen in the middle left. The scalebars represent 50 ms and 1 mV.</p>
+            <p>To the right, you can see a more comprehensive plot of the current event: all 16 channels are plotted (instead of only two), and the plot ranges from 1000 ms before to 1000 ms after the event.
+            <p>In this large plot, the blue vertical line marks the currently active event. The grey vertical lines correspond to other detected events. The scalebar at the beginning of this plot represents 1 mV.</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button"
+                    class="btn btn-primary"
+                    data-dismiss="modal">
+              Let's get started
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="lib/jquery-3.3.1.min.js"></script>
+  <script src="lib/bootstrap.bundle.min.js"></script>
+  <script src="lib/moment.js"></script>
+  <script src="lib/lodash.js"></script>
+  <script src="lib/vue.js"></script>
+  <script src="lib/vue-loading.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
