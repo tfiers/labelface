@@ -37,7 +37,7 @@ let labelApp = new Vue({
     $('#settings').modal('show')
   },
   data: {
-    'loading': true,
+    'loading': false,
     'authors': [],
     'selected_author': null,
     'subsets': [],
@@ -52,8 +52,10 @@ let labelApp = new Vue({
   watch: {
     selected_subset: {
       handler: function() {
-        this.loading = true
-        this.fetchState()
+        if (this.selected_author) {
+          this.loading = true
+          this.fetchState()
+        }
       },
     },
     selected_author: {
@@ -128,17 +130,19 @@ let labelApp = new Vue({
       })
     },
     fetchState: function() {
-      const url = `${backend}/state`
-      const params = {
-        'author': this.selected_author,
-        'subset': this.selected_subset,
+      if (this.selected_author) {
+        const url = `${backend}/state`
+        const params = {
+          'author': this.selected_author,
+          'subset': this.selected_subset,
+        }
+        const _this = this
+        $.getJSON(url, params, function(data) {
+          _this.events = data.events
+          _this.activateFirstUnlabelled()
+          _this.loading = false
+        })
       }
-      const _this = this
-      $.getJSON(url, params, function(data) {
-        _this.events = data.events
-        _this.activateFirstUnlabelled()
-        _this.loading = false
-      })
     },
     saveState: _.debounce(function() {
         const data = {
