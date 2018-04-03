@@ -16,25 +16,15 @@ html, body {
 	border-top: 2px solid white;
 }
 
-.vignette:hover {
-	border-bottom-color: black;
-}
+.vignette:hover { border-bottom-color: black }
 
-.has-comment {
-	border-bottom-color: #CCC;
-}
+.has-comment { border-bottom-color: #CCC }
 
-.SWR {
-	border-top-color: #28A745;
-}
+.SWR { border-top-color: #28A745 }
 
-.not-SWR {
-	border-top-color: #DC3545;
-}
+.not-SWR { border-top-color: #DC3545 }
 
-.active {
-	border-bottom-color: black;
-}
+.active { border-bottom-color: black }
 
 #context {
 	overflow-x: scroll;
@@ -44,6 +34,14 @@ html, body {
 #context > img {
 	min-width: 1000px;
 	width: 100%;
+}
+
+.fade-enter-active, .fade-leave-active {
+	transition: opacity 0.08s;
+}
+
+.fade-enter, .fade-leave-to {
+	opacity: 0;
 }
 
 .scalebar {

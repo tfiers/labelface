@@ -67,7 +67,10 @@
       <div class="col">
         <div id="context"
              class="card">
-          <img v-bind:src="contextSrc">
+          <transition name="fade" mode="out-in">
+            <img v-bind:src="contextSrc"
+                 v-bind:key="contextSrc">
+          </transition>
         </div>
       </div>
     </div>
