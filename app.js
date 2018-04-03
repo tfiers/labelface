@@ -27,18 +27,19 @@ let labelApp = new Vue({
     loading: VueLoading,
   },
   created: function() {
+    this.fetchAuthors()
     this.fetchSubsets()
     this.setupKeybindings()
     let _this = this
     setInterval(() => _this.prettifyLastSave(), 1000)
   },
   mounted: function() {
-    // $('#instructions').modal('show')
+    $('#settings').modal('show')
   },
   data: {
     'loading': true,
-    'username': null,
-    'names': [],
+    'authors': [],
+    'selected_author': null,
     'subsets': [],
     'selected_subset': '',
     'events': [],
@@ -55,10 +56,28 @@ let labelApp = new Vue({
         this.fetchState()
       },
     },
+    selected_author: {
+      handler: function() {
+        if (this.selected_author == '[ New name ]') {
+          let name = prompt('Name')
+          if (name) {
+            this.authors.push(name)
+            this.selected_author = name
+            this.addAuthor()
+          }
+        }
+        else {
+          this.loading = true
+          this.fetchState()
+        }
+      }
+    },
     events: {
       deep: true,
       handler: function() {
-        this.saveState()
+        if (this.selected_author) {
+          this.saveState()
+        }
       },
     },
     activeEvent: {
@@ -84,6 +103,23 @@ let labelApp = new Vue({
     },
   },
   methods: {
+    fetchAuthors: function() {
+      let _this = this
+      $.getJSON(`${backend}/authors`, function(data) {
+        _this.authors = data
+      })
+    },
+    addAuthor: function() {
+      const _this = this
+      $.ajax(`${backend}/authors`, {
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify({author: this.selected_author}),
+      })
+      .done(function() {
+        console.log('sent')
+      })
+    },
     fetchSubsets: function() {
       let _this = this
       $.getJSON(`${backend}/subsets`, function(data) {
@@ -94,7 +130,7 @@ let labelApp = new Vue({
     fetchState: function() {
       const url = `${backend}/state`
       const params = {
-        'author': 'ik',
+        'author': this.selected_author,
         'subset': this.selected_subset,
       }
       const _this = this
@@ -106,7 +142,7 @@ let labelApp = new Vue({
     },
     saveState: _.debounce(function() {
         const data = {
-          'author': 'ik',
+          'author': this.selected_author,
           'subset': this.selected_subset,
           'events': this.events,
         }
@@ -162,7 +198,7 @@ let labelApp = new Vue({
         container: '#vignette-container',
         x: true,
         y: false,
-        offset: - (0.475 * listWidth - 0.475 * imgWidth),
+        offset: - (0.465 * listWidth - 0.465 * imgWidth),
       })
     }, 300, { leading: true }),
     setupKeybindings: function() {

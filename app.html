@@ -26,14 +26,20 @@
       <div class="d-flex flex-wrap">
         <form class="form-inline">
           <button type="button"
+                  class="btn btn-outline-secondary btn-sm mr-1"
+                  data-toggle="modal"
+                  data-target="#settings">
+            Settings
+          </button>
+          <button type="button"
                   class="btn btn-outline-secondary btn-sm mr-3"
                   data-toggle="modal"
-                  data-target="#instructions">
-            Settings &amp; Info
+                  data-target="#info">
+            Info
           </button>
         </form>
         <div id="last-save"
-             class="text-muted"
+             class="text-muted navbar-text"
              style="width: 220px">
           <small v-if="last_save">
             Last save: {{ last_save_pretty }}
@@ -101,10 +107,10 @@
       </div>
     </div>
 
-    <div id="instructions"
+    <div id="settings"
          class="modal fade"
          tabindex="-1">
-      <div class="modal-dialog modal-lg">
+      <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title">Label potential SWR events</h5>
@@ -115,45 +121,79 @@
             </button>
           </div>
           <div class="modal-body">
-            <p class="text-muted">This dialog box can be reopened at any time by clicking 'Instructions'.</p>
-
             <p>Thanks for taking the time to help.</p>
 
+            <p>Please select your name, and the subset of events you want to label:</p>
+
             <form>
-              <label for="name-selector"
-                     class="navbar-text mr-2">
-                Name:
-              </label>
-              <select v-model="username"
-                      id="name-selector"
-                      class="form-control form-control-sm mr-3"
-                      title="Select your name">
-                <option disabled value="">
-                  Your name
-                </option>
-                <option v-for="name in names">
-                  {{ name }}
-                </option>
-                <option>
-                  [ New name ]
-                </option>
-              </select>
-              <label for="subset-selector"
-                     class="navbar-text mr-2">
-                Events:
-              </label>
-              <select v-model="selected_subset"
-                      id="subset-selector"
-                      class="form-control form-control-sm"
-                      title="Select the subset of events that are loaded">
-                <option disabled value="">
-                  Select subset
-                </option>
-                <option v-for="subset in subsets">
-                  {{ subset }}
-                </option>
-              </select>
+              <div class="form-group row">
+                <label for="author-selector"
+                       class="col col-form-label">
+                  Name:
+                </label>
+                <div class="col-sm-4">
+                  <select v-model="selected_author"
+                          id="author-selector"
+                          class="form-control"
+                          title="Select your name">
+                    <option v-for="name in authors">
+                      {{ name }}
+                    </option>
+                    <option>
+                      [ New name ]
+                    </option>
+                  </select>
+                </div>
+                <label for="subset-selector"
+                       class="col col-form-label">
+                  Events:
+                </label>
+                <div class="col-sm-4">
+                  <select v-model="selected_subset"
+                          id="subset-selector"
+                          class="form-control"
+                          title="Select the subset of events that are loaded">
+                    <option disabled value="">
+                      Select subset
+                    </option>
+                    <option v-for="subset in subsets">
+                      {{ subset }}
+                    </option>
+                  </select>
+                </div>
+              </div>
             </form>
+          </div>
+
+          <p>
+            
+          </p>
+
+          <div class="modal-footer">
+            <button type="button"
+                    class="btn btn-primary"
+                    data-dismiss="modal">
+              Let's get started
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="info"
+         class="modal fade"
+         tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Label potential SWR events</h5>
+            <button type="button"
+                    class="close"
+                    data-dismiss="modal">
+              <span>&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
 
             <h5>Workflow</h5>
             <!-- <p>First, select a set of events to label using the dropdown menu.</p> -->
@@ -173,7 +213,7 @@
             <button type="button"
                     class="btn btn-primary"
                     data-dismiss="modal">
-              Let's get started
+              OK
             </button>
           </div>
         </div>
