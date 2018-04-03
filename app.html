@@ -16,9 +16,11 @@
   -->
   <div id="label-app" class="container">
 
+    <loading v-bind:active.sync="loading"></loading>
+
     <nav class="navbar navbar-light bg-light">
       <div class="d-flex">
-        <button class="btn btn-outline-success mr-4"
+        <button class="btn btn-outline-secondary mr-4"
                 data-toggle="modal"
                 data-target="#instructions">
           Instructions
@@ -41,130 +43,33 @@
           </select>
         </form>
       </div>
-
-      <div class="d-flex">
-        <span class="navbar-text mr-4">
-          {{ username }}
-        </span>
-        <button class="btn btn-outline-danger">
-          Sign out
-        </button>
-      </div>
     </nav>
 
-    <loading :active.sync="loading"></loading>
-
     <div class="row mt-3">
-
-      <div class="col-md-6">
-
-        <div class="card mb-3">
-          <h5 class="card-header">Unlabelled events</h5>
-          <div id="unlabelled-events"
-               class="vignette-list">
-            <div class="vignette-container">
-              <img v-for="event in events.unlabelled"
-                   v-bind:src="imageSrc(event)">
-            </div>
-          </div>
-        </div>
-
+      <div class="col">
         <div class="card">
-          <div class="card-body row">
-            <div id="active-event"
-                 class="col-sm-auto">
-              <div class="vignette-container">
-                <div v-if="events.activeEvent != null">
-                  <span class="scalebar" id="voltage"></span>
-                  <span class="scalebar" id="time"></span>
-                </div>
-                <img v-if="events.activeEvent != null"
-                     v-bind:src="imageSrc(events.activeEvent)">
-              </div>
-            </div>
-            <div class="col-sm d-flex">
-              <div class="mt-auto">
-                <div v-if="events.activeEvent != null">
-                  <input type="text"
-                         placeholder="Optional comment"
-                         title="Attach a comment to the event currently in the decision area"
-                         class="form-control mt-1"
-                         v-model="events.activeEvent.comment">
-                  <button v-on:click="labelActiveEvent('not_SWR')"
-                          class="btn btn-primary mt-1"
-                          title="Shortcut: left arrow key">
-                    ← Label Not SWR
-                  </button>
-                  <button v-on:click="labelActiveEvent('SWR')"
-                          class="btn btn-primary mt-1"
-                          title="Shortcut: right arrow key">
-                    Label SWR →
-                  </button>
-                </div>
-                <div id="last-save"
-                     class="text-muted"
-                     v-if="last_save">
-                  <small>Last save: {{ last_save_pretty }}</small>
-                </div>
-              </div>
-            </div>
+          <div id="vignette-container">
+            <img v-for="event in events"
+                 v-bind:src="imageSrc(event)"
+                 v-on:mouseover="hovered = event"
+                 v-on:mouseleave="hovered = null"
+                 v-on:click="activate(event)"
+                 v-bind:id="'vignette-' + event.id"
+                 class="vignette mr-2"
+                 v-bind:class="vignetteClass(event)"
+                 v-bind:title="vignetteTitle(event)">
           </div>
         </div>
-
       </div>
-
-      <div class="col-md-6">
-
-        <div id="context"
-             class="card">
-          <img v-bind:src="contextEvent">
-        </div>
-
-      </div>
-
-
     </div>
 
-    <div class="row mt-3 mb-3">
-
-      <div class="col-md-6 mb-3">
-        <div class="card">
-        <h5 class="card-header">Probably not an SWR event</h5 >
-          <div id="labelled-not-SWR"
-               class="vignette-list">
-            <div class="vignette-container">
-              <img v-for="event in events.not_SWR"
-                   v-bind:src="imageSrc(event)"
-                   v-on:mouseover="hovered = event"
-                   v-on:mouseleave="hovered = null"
-                   v-on:click="unlabel(event, 'not_SWR')"
-                   class="clickable"
-                   v-bind:class="{ 'has-comment': event.comment }"
-                   v-bind:title="vignetteTitle(event)">
-            </div>
-          </div>
+    <div class="row mt-3">
+      <div class="col">
+        <div id="context"
+             class="card">
+          <img v-bind:src="contextSrc">
         </div>
       </div>
-
-      <div class="col-md-6">
-        <div class="card">
-          <h5 class="card-header">Probably an SWR event</h5>
-          <div id="labelled-SWR"
-               class="vignette-list">
-            <div class="vignette-container">
-              <img v-for="event in events.SWR"
-                   v-bind:src="imageSrc(event)"
-                   v-on:click="unlabel(event, 'SWR')"
-                   v-on:mouseover="hovered = event"
-                   v-on:mouseleave="hovered = null"
-                   class="clickable"
-                   v-bind:class="{ 'has-comment': event.comment }"
-                   v-bind:title="vignetteTitle(event)">
-            </div>
-          </div>
-        </div>
-      </div>
-
     </div>
 
     <div id="instructions"
@@ -218,6 +123,7 @@
   <script src="lib/lodash.js"></script>
   <script src="lib/vue.js"></script>
   <script src="lib/vue-loading.min.js"></script>
+  <script src="lib/vue-scrollto.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

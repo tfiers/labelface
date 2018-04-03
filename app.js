@@ -19,6 +19,7 @@ moment.fn.fromNowOrNow = function(a) {
 }
 
 Vue.use(VueLoading)
+Vue.use(VueScrollTo)
 
 let labelApp = new Vue({
   el: '#label-app',
@@ -39,15 +40,12 @@ let labelApp = new Vue({
     'username': 'tomasf',
     'subsets': [],
     'selected_subset': '',
-    'events': {
-      'unlabelled': [],
-      'not_SWR': [],
-      'SWR': [],
-      'activeEvent': null,
-    },
+    'events': [],
+    'activeEvent': null,
     'last_save': null,
     'last_save_pretty': null,
     'hovered': null,
+    'cancel_scroll': null,
   },
   watch: {
     selected_subset: {
@@ -62,14 +60,22 @@ let labelApp = new Vue({
         this.saveState()
       },
     },
+    activeEvent: {
+      handler: function() {
+        this.scrollToActiveEvent()
+      },
+    },
   },
   computed: {
-    contextEvent: function() {
+    activeEventIndex: function() {
+      return this.events.indexOf(this.activeEvent)
+    },
+    contextSrc: function() {
       if (this.hovered != null) {
         return this.imageSrcContext(this.hovered)
       }
-      else if (this.events.activeEvent != null) {
-        return this.imageSrcContext(this.events.activeEvent)
+      else if (this.activeEvent != null) {
+        return this.imageSrcContext(this.activeEvent)
       }
       else {
         return ''
@@ -93,7 +99,7 @@ let labelApp = new Vue({
       const _this = this
       $.getJSON(url, params, function(data) {
         _this.events = data.events
-        _this.loadUnlabelledEvent()
+        _this.activateFirstUnlabelled()
         _this.loading = false
       })
     },
@@ -119,21 +125,66 @@ let labelApp = new Vue({
         leading: true,
         trailing: true,
       }),
-    loadUnlabelledEvent: function() {
-      if (this.events.activeEvent == null) {
-        let e = this.events.unlabelled.shift()
-        this.events.activeEvent = e
+    activateFirstUnlabelled: function() {
+      let event = this.events.find(this.unlabelled)
+      this.activeEvent = event
+      setTimeout(this.scrollToActiveEvent, 1000)
+      this.scrollToActiveEvent()
+    },
+    activate: function(event) {
+      this.activeEvent = event
+    },
+    labelActiveEvent: function(label) {
+      this.activeEvent.label = label
+      // this.activateFirstUnlabelled()
+    },
+    moveLeft: function() {
+      let ix = this.activeEventIndex
+      if (ix > 0) {
+        this.activeEvent = this.events[ix - 1]
       }
     },
+    moveRight: function() {
+      let ix = this.activeEventIndex
+      if (ix < this.events.length - 1) {
+        this.activeEvent = this.events[ix + 1]
+      }
+    },
+    scrollToActiveEvent: _.debounce(function() {
+      if (this.cancel_scroll != null) {
+        this.cancel_scroll()
+      }
+      const el = `#vignette-${this.activeEvent.id}`
+      const listWidth = $('#vignette-container').width()
+      const imgWidth = $(el).width()
+      this.cancel_scroll = VueScrollTo.scrollTo(el, 200, {
+        container: '#vignette-container',
+        x: true,
+        y: false,
+        offset: - (listWidth / 2 - imgWidth / 2),
+      })
+    }, 300),
     setupKeybindings: function() {
       let _this = this
       window.addEventListener('keyup', function(e) {
-        if (e.which == 37) {
-          _this.labelActiveEvent('not_SWR')
+        switch (e.which) {
+          case 37:
+            _this.moveLeft()
+            break
+          case 39:
+            _this.moveRight()
+            break
+          case 38:
+            _this.labelActiveEvent('SWR')
+            break
+          case 40:
+            _this.labelActiveEvent('not_SWR')
+            break
         }
-        else if (e.which == 39) {
-          _this.labelActiveEvent('SWR')
-        }
+      })
+      $('#vignette-container').on('keydown', function(e) {
+        e.stopPropagation()
+        e.preventDefault()
       })
     },
     prettifyLastSave: function() {
@@ -143,41 +194,35 @@ let labelApp = new Vue({
         this.last_save_pretty = `${absolute} (${relative})`
       }
     },
-    labelActiveEvent: function(label) {
-      /**
-       * Move the currently active event to the list specified by 'label'.
-       */
-      let e = this.events.activeEvent
-      if (e != null) {
-        this.events[label].unshift(e)
-      }
-      this.events.activeEvent = null
-      this.loadUnlabelledEvent()
-    },
-    unlabel: function(event, label) {
-      // Move the currently active event back to the 'Unlabelled' queue.
-      let prevActive = this.events.activeEvent
-      if (prevActive != null) {
-        this.events.unlabelled.unshift(prevActive)
-      }
-      // Remove the selected labelled event from its queue
-      _.pull(this.events[label], event)
-      // Make the selected event the active event.
-      this.events.activeEvent = event
-      this.loadUnlabelledEvent()
-    },
     imageSrc: (event) => {
       return `img/vignettes/${event.id}.png`
     },
     imageSrcContext: (event) => {
       return `img/context/${event.id}.png`
     },
+    unlabelled: (event) => (event.label == null),
     vignetteTitle: (event) => {
-      let s = 'Click to unlabel'
+      let s = ''
+      if (event.label == 'null') {
+        s += 'Unlabelled'
+      }
+      else {
+        s += `Label: ${event.label}`
+      }
       if (event.comment) {
         s += `\nComment: "${event.comment}"`
       }
+      s += '\nClick to activate'
       return s
+    },
+    vignetteClass: function(event) {
+      return {
+        'has-comment': event.comment != null,
+        'active': event == this.activeEvent,
+        'unlabelled': event.label == null,
+        'SWR': event.label == 'SWR',
+        'not-SWR': event.label == 'not_SWR',
+      }
     },
   },
 });
