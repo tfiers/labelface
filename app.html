@@ -3,7 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport"
-        content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        content="width=device-width,
+                 initial-scale=1,
+                 shrink-to-fit=no">
   <title>Label potential SWR events</title>
   <link rel="stylesheet" href="lib/bootstrap.min.css">
   <link rel="stylesheet" href="lib/vue-loading.min.css">
@@ -18,7 +20,9 @@
 
     <loading v-bind:active.sync="loading"></loading>
 
-    <nav class="navbar navbar-light bg-light navbar-expand-md d-flex justify-content-between">
+    <nav class="navbar navbar-light
+                bg-light navbar-expand-md
+                d-flex justify-content-between">
       <div class="d-flex flex-wrap">
         <form class="form-inline">
           <button type="button"
@@ -42,22 +46,27 @@
         </span>
       </div>
       <div class="d-flex">
-        <form id="form-event" class="form-inline" v-if="activeEvent">
+        <form id="form-event"
+              class="form-inline"
+              v-if="activeEvent">
           <input type="text"
                  id="comment-input"
                  placeholder="Optional comment"
                  title="Attach a comment to this event"
-                 class="mt-1 mb-1 form-control form-control-sm mr-3"
+                 class="form-control form-control-sm
+                        mt-1 mb-1 mr-3"
                  v-model="activeEvent.comment">
           <button type="button"
                   v-on:click="labelActiveEvent('SWR')"
-                  class="mt-1 mb-1 btn btn-outline-success btn-sm mr-3"
+                  class="btn btn-outline-success btn-sm
+                         mt-1 mb-1 mr-3"
                   title="Shortcut: up arrow key">
             ↑ Label SWR
           </button>
           <button type="button"
                   v-on:click="labelActiveEvent('not_SWR')"
-                  class="mt-1 mb-1 btn btn-outline-danger btn-sm"
+                  class="btn btn-outline-danger btn-sm
+                         mt-1 mb-1"
                   title="Shortcut: down arrow key">
             ↓ Label Not SWR
           </button>

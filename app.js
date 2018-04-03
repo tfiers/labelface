@@ -137,7 +137,7 @@ let labelApp = new Vue({
     },
     labelActiveEvent: function(label) {
       this.activeEvent.label = label
-      // this.activateFirstUnlabelled()
+      this.moveRight()
     },
     moveLeft: function() {
       let ix = this.activeEventIndex
@@ -185,10 +185,12 @@ let labelApp = new Vue({
       })
       $('#vignette-container').on('keydown', function(e) {
         e.preventDefault()
+        e.stopPropagation()
       })
       $(document).on('keydown', function(e) {
         if (e.which == 13) {
           e.preventDefault()
+          e.stopPropagation()
         }
       })
     },
@@ -222,7 +224,7 @@ let labelApp = new Vue({
     },
     vignetteClass: function(event) {
       return {
-        'has-comment': event.comment != null,
+        'has-comment': !_.isEmpty(event.comment),
         'active': event == this.activeEvent,
         'unlabelled': event.label == null,
         'SWR': event.label == 'SWR',
