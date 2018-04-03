@@ -12,11 +12,11 @@ html, body {
 .vignette {
 	height: 110px;
 	cursor: pointer;
-	border-top: 2px solid white;
-	border-bottom: 2px solid white;
+	border-top: 1.5px solid white;
+	border-bottom: 1.5px solid white;
 }
 
-.vignette:hover { border-top-color: black }
+.vignette:hover { border-top-color: #999 }
 
 .has-comment { border-top-color: #CCC }
 
@@ -24,7 +24,7 @@ html, body {
 
 .not-SWR { border-bottom-color: #DC3545 }
 
-.active { border-top-color: black }
+.active { border-top-color: #666 }
 
 #context {
 	overflow-x: scroll;

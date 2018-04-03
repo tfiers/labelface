@@ -14,33 +14,53 @@
        parsed by the JavaScript UI framework "Vue".
        See: https://vuejs.org
   -->
-  <div id="label-app" class="container">
+  <div id="label-app" class="container-fluid">
 
     <loading v-bind:active.sync="loading"></loading>
 
-    <nav class="navbar navbar-light bg-light">
-      <div class="d-flex">
-        <button class="btn btn-outline-secondary mr-4"
-                data-toggle="modal"
-                data-target="#instructions">
-          Instructions
-        </button>
+    <nav class="navbar navbar-light bg-light navbar-expand-md d-flex justify-content-between">
+      <div class="d-flex flex-wrap">
         <form class="form-inline">
-          <label for="subset-selector"
-                 class="navbar-text mr-2">
-            Subset of events:
-          </label>
-          <select v-model="selected_subset"
-                  id="subset-selector"
-                  class="form-control"
-                  title="Select the subset of events that are loaded">
-            <option disabled value="">
-              Select subset
-            </option>
-            <option v-for="s in subsets">
-              {{ s }}
-            </option>
-          </select>
+          <button type="button"
+                  class="btn btn-outline-secondary btn-sm mr-3"
+                  data-toggle="modal"
+                  data-target="#instructions">
+            Settings &amp; Info
+          </button>
+        </form>
+        <div id="last-save"
+             class="text-muted"
+             style="width: 220px">
+          <small v-if="last_save">
+            Last save: {{ last_save_pretty }}
+          </small>
+        </div>
+      </div>
+      <div>
+        <span class="navbar-text" v-if="activeEvent">
+          Event <strong>{{ activeEvent.id + 1 }}</strong>
+        </span>
+      </div>
+      <div class="d-flex">
+        <form id="form-event" class="form-inline" v-if="activeEvent">
+          <input type="text"
+                 id="comment-input"
+                 placeholder="Optional comment"
+                 title="Attach a comment to this event"
+                 class="mt-1 mb-1 form-control form-control-sm mr-3"
+                 v-model="activeEvent.comment">
+          <button type="button"
+                  v-on:click="labelActiveEvent('SWR')"
+                  class="mt-1 mb-1 btn btn-outline-success btn-sm mr-3"
+                  title="Shortcut: up arrow key">
+            ↑ Label SWR
+          </button>
+          <button type="button"
+                  v-on:click="labelActiveEvent('not_SWR')"
+                  class="mt-1 mb-1 btn btn-outline-danger btn-sm"
+                  title="Shortcut: down arrow key">
+            ↓ Label Not SWR
+          </button>
         </form>
       </div>
     </nav>
@@ -89,6 +109,42 @@
             <p class="text-muted">This dialog box can be reopened at any time by clicking 'Instructions'.</p>
 
             <p>Thanks for taking the time to help.</p>
+
+            <form>
+              <label for="name-selector"
+                     class="navbar-text mr-2">
+                Name:
+              </label>
+              <select v-model="username"
+                      id="name-selector"
+                      class="form-control form-control-sm mr-3"
+                      title="Select your name">
+                <option disabled value="">
+                  Your name
+                </option>
+                <option v-for="name in names">
+                  {{ name }}
+                </option>
+                <option>
+                  [ New name ]
+                </option>
+              </select>
+              <label for="subset-selector"
+                     class="navbar-text mr-2">
+                Events:
+              </label>
+              <select v-model="selected_subset"
+                      id="subset-selector"
+                      class="form-control form-control-sm"
+                      title="Select the subset of events that are loaded">
+                <option disabled value="">
+                  Select subset
+                </option>
+                <option v-for="subset in subsets">
+                  {{ subset }}
+                </option>
+              </select>
+            </form>
 
             <h5>Workflow</h5>
             <!-- <p>First, select a set of events to label using the dropdown menu.</p> -->

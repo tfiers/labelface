@@ -37,7 +37,8 @@ let labelApp = new Vue({
   },
   data: {
     'loading': true,
-    'username': 'tomasf',
+    'username': null,
+    'names': [],
     'subsets': [],
     'selected_subset': '',
     'events': [],
@@ -161,7 +162,7 @@ let labelApp = new Vue({
         container: '#vignette-container',
         x: true,
         y: false,
-        offset: - (listWidth / 2 - imgWidth / 2),
+        offset: - (0.475 * listWidth - 0.475 * imgWidth),
       })
     }, 300, { leading: true }),
     setupKeybindings: function() {
@@ -183,8 +184,12 @@ let labelApp = new Vue({
         }
       })
       $('#vignette-container').on('keydown', function(e) {
-        e.stopPropagation()
         e.preventDefault()
+      })
+      $(document).on('keydown', function(e) {
+        if (e.which == 13) {
+          e.preventDefault()
+        }
       })
     },
     prettifyLastSave: function() {
@@ -203,7 +208,7 @@ let labelApp = new Vue({
     unlabelled: (event) => (event.label == null),
     vignetteTitle: (event) => {
       let s = ''
-      if (event.label == 'null') {
+      if (event.label == null) {
         s += 'Unlabelled'
       }
       else {
