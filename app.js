@@ -163,7 +163,7 @@ let labelApp = new Vue({
         y: false,
         offset: - (listWidth / 2 - imgWidth / 2),
       })
-    }, 300),
+    }, 300, { leading: true }),
     setupKeybindings: function() {
       let _this = this
       window.addEventListener('keyup', function(e) {
