@@ -142,8 +142,8 @@ let labelApp = new Vue({
         const _this = this
         $.getJSON(url, params, function(data) {
           _this.events = data.events
-          _this.activateFirstUnlabelled()
           _this.loading = false
+          _this.activateFirstUnlabelled()
         })
       }
     },
@@ -195,6 +195,9 @@ let labelApp = new Vue({
       }
     },
     scrollToActiveEvent: _.debounce(function() {
+      if (this.activeEvent == null) {
+        return
+      }
       if (this.cancel_scroll != null) {
         this.cancel_scroll()
       }
