@@ -37,9 +37,9 @@ let labelApp = new Vue({
     $('#settings').modal('show')
   },
   data: {
-    'loading': false,
+    'loading': true,
     'authors': [],
-    'selected_author': null,
+    'selected_author': 'Demo',
     'subsets': [],
     'selected_subset': '',
     'events': [],
@@ -65,7 +65,7 @@ let labelApp = new Vue({
           if (name) {
             this.authors.push(name)
             this.selected_author = name
-            this.addAuthor()
+            this.saveAuthor()
           }
         }
         else {
@@ -110,8 +110,11 @@ let labelApp = new Vue({
       $.getJSON(`${backend}/authors`, function(data) {
         _this.authors = data
       })
+      .done(function() {
+        _this.loading = false
+      })
     },
-    addAuthor: function() {
+    saveAuthor: function() {
       const _this = this
       $.ajax(`${backend}/authors`, {
         type: 'POST',
@@ -223,12 +226,8 @@ let labelApp = new Vue({
             break
         }
       })
-      $('#vignette-container').on('keydown', function(e) {
-        e.preventDefault()
-        e.stopPropagation()
-      })
       $(document).on('keydown', function(e) {
-        if (e.which == 13) {
+        if ([13, 37, 38, 39, 40].includes(e.which)) {
           e.preventDefault()
           e.stopPropagation()
         }

@@ -123,6 +123,7 @@
           <div class="modal-body">
             <p>Thanks for taking the time to help.</p>
 
+            <h5>Settings</h5>
             <p>Please select your name, and the subset of events you want to label:</p>
 
             <form>
@@ -163,11 +164,23 @@
                 </div>
               </div>
             </form>
-          </div>
 
-          <p>
-            
-          </p>
+            <p>
+              <h5>Controls</h5>
+              <ul>
+                <li>Arrow keys <kbd>&lt;</kbd> and <kbd>&gt;</kbd> to move between events. (You can also use the mouse).</li>
+                <li>Arrow keys <kbd>^</kbd> and <kbd>v</kbd> to label the selected event as either "<span class="text-success">Probably a sharp-wave ripple</span>" or "<span class="text-danger">Probably <em>not</em> a sharp-wave ripple</span>", respectively. (Or use the buttons in the top right corner).</li>
+              </ul>
+            </p>
+
+            <h5>Data &amp; plots</h5>
+            <p>
+              Information about what you see in the plots can be found under the "Info" button.
+            </p>
+            <p>
+              Thanks again and good luck!
+            </p>
+          </div>
 
           <div class="modal-footer">
             <button type="button"
@@ -186,7 +199,7 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">Label potential SWR events</h5>
+            <h5 class="modal-title">What's in the plots</h5>
             <button type="button"
                     class="close"
                     data-dismiss="modal">
@@ -196,7 +209,6 @@
           <div class="modal-body">
 
             <h5>Workflow</h5>
-            <!-- <p>First, select a set of events to label using the dropdown menu.</p> -->
             <ul class="pl-3">
               <li>Events are presented one by one, taken from the 'Unlabelled' queue at the top.</li>
               <li>Each event is represented by two voltage traces: one from an electrode in the pyramidal cell layer (the top trace), and one from an electrode in the stratum radiatum.</li>
