@@ -196,7 +196,7 @@
     <div id="info"
          class="modal fade"
          tabindex="-1">
-      <div class="modal-dialog">
+      <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title">What's in the plots</h5>
@@ -208,18 +208,41 @@
           </div>
           <div class="modal-body">
 
-            <h5>Workflow</h5>
-            <ul class="pl-3">
-              <li>Events are presented one by one, taken from the 'Unlabelled' queue at the top.</li>
-              <li>Each event is represented by two voltage traces: one from an electrode in the pyramidal cell layer (the top trace), and one from an electrode in the stratum radiatum.</li>
-              <li>Click one of the two blue 'Label' buttons (or use the left and right arrow keys) to classify the current event as either 'Probably <em>not</em> an SWR event', or 'Probably an SWR event'.</li>
-            </ul>
-            <p class="text-muted">If you think you have made a mistake, you can click one of the already labelled events at the bottom of the page to move it back to the decision area.</p>
+            <h5>Data</h5>
 
-            <h5>The plots</h5>
-            <p>The event that is currently active can be seen in the middle left. The scalebars represent 50 ms and 1 mV.</p>
-            <p>To the right, you can see a more comprehensive plot of the current event: all 16 channels are plotted (instead of only two), and the plot ranges from 1000 ms before to 1000 ms after the event.
+            We analyse an LFP recording from <em>Michon et al. 2016</em>, made with a 16-electrode "L"-style probe. (Specifically probe number "L2"). The data is filtered between 0.1 and 500 Hz.
+
+<!--             <ul>
+              <li>Male Long-Evans rat.</li>
+              <li>Extracellular electric field potential</li>
+              <li>Filtered 0.1 - 500 Hz</li>
+              <li>16-electrode, "L" style probe.</li>
+            </ul>
+            made in a Long-Evans rat in 2014. -->
+<!-- 
+            <figure class="figure mt-3 mb-3">
+              <img src="img/Histology.png"
+                   class="figure-img img-fluid">
+              <figcaption class="figure-caption">
+                Fig. 1 | Image from <em>Michon et al. 2016</em>.
+              </figcaption>
+            </figure> -->
+
+            <figure class="figure m-3">
+              <img src="img/Composition.png"
+                   class="figure-img img-fluid">
+              <figcaption class="figure-caption">Rough estimation of the position of the probe with respect to the layers of CA1. Only five of the 16 voltage traces are drawn here.</figcaption>
+            </figure>
+
+            <h5>Plots</h5>
+
+            <p>Each event in the list at the top is represented by two voltage traces: one from an electrode in the pyramidal cell layer (the top trace), and one from an electrode in the stratum radiatum.
+              <!-- The event that is currently active can be seen in the middle left. The scalebars represent 50 ms and 1 mV.-->
+            </p>
+
+            <p>The large plot at the bottom gives more comprehensive view of the current event: all 16 channels are plotted (instead of only two), and the plot ranges from 1000 ms before to 1000 ms after the event.</p>
             <p>In this large plot, the blue vertical line marks the currently active event. The grey vertical lines correspond to other detected events. The scalebar at the beginning of this plot represents 1 mV.</p>
+            
           </div>
           <div class="modal-footer">
             <button type="button"
