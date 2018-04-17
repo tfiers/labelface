@@ -19,12 +19,14 @@ moment.fn.fromNowOrNow = function(a) {
 }
 
 Vue.use(VueLoading)
+Vue.use(VueLoadingSpinner)
 Vue.use(VueScrollTo)
 
 let labelApp = new Vue({
   el: '#label-app',
   components: {
     loading: VueLoading,
+    spinner: VueLoadingSpinner.RotateSquare2,
   },
   created: function() {
     this.fetchAuthors()
@@ -37,6 +39,7 @@ let labelApp = new Vue({
     $('#settings').modal('show')
   },
   data: {
+    'backend_waking_up': true,
     'loading': true,
     'authors': [],
     'selected_author': 'Demo',
@@ -111,6 +114,7 @@ let labelApp = new Vue({
         _this.authors = data
       })
       .done(function() {
+        _this.backend_waking_up = false
         _this.loading = false
       })
     },

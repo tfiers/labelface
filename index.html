@@ -9,9 +9,11 @@
   <title>Label potential SWR events</title>
   <link rel="stylesheet" href="lib/bootstrap.min.css">
   <link rel="stylesheet" href="lib/vue-loading.min.css">
+  <link rel="stylesheet" href="lib/vue-loading-spinner.css">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
   <!-- Attributes with the prefix "v-" are
        parsed by the JavaScript UI framework "Vue".
        See: https://vuejs.org
@@ -19,7 +21,7 @@
   <div id="label-app" class="container-fluid">
 
     <loading v-bind:active.sync="loading"></loading>
-
+    
     <nav class="navbar navbar-light
                 bg-light navbar-expand-md
                 d-flex justify-content-between">
@@ -126,7 +128,17 @@
             <h5>Settings</h5>
             <p>Please select your name, and the subset of events you want to label:</p>
 
-            <form>
+            <div v-if="backend_waking_up" class="row">
+              <div class="col-7 d-flex">
+                <p class="text-muted align-self-end mb-0">
+                  Waiting for backend to wake up...
+                </p>
+              </div>
+              <div class="col">
+                <spinner></spinner>
+              </div>
+            </div>
+            <form v-else>
               <div class="form-group row">
                 <label for="author-selector"
                        class="col col-form-label">
@@ -185,7 +197,8 @@
           <div class="modal-footer">
             <button type="button"
                     class="btn btn-primary"
-                    data-dismiss="modal">
+                    data-dismiss="modal"
+                    v-bind:disabled="backend_waking_up">
               Let's get started
             </button>
           </div>
@@ -263,6 +276,7 @@
   <script src="lib/lodash.js"></script>
   <script src="lib/vue.js"></script>
   <script src="lib/vue-loading.min.js"></script>
+  <script src="lib/vue-loading-spinner.js"></script>
   <script src="lib/vue-scrollto.js"></script>
   <script src="app.js"></script>
 </body>
